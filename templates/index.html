@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodSync AI - Comprehensive Mood Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🧠 MoodSync AI</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#text-analysis" class="nav-link">Text</a>
+                <a href="#voice-analysis" class="nav-link">Voice</a>
+                <a href="#video-analysis" class="nav-link">Video</a>
+                <a href="#wellness" class="nav-link">Wellness</a>
+                <a href="#travel" class="nav-link">Travel</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">MoodSync AI</h1>
+                <p class="hero-subtitle">Advanced Mood Analysis & Personalized Recommendations</p>
+                <p class="hero-description">
+                    Discover your emotional state through AI analysis of text, voice, and video. 
+                    Get personalized wellness guides and travel recommendations.
+                </p>
+                <div class="hero-features">
+                    <div class="feature-card" data-section="text-analysis">
+                        <div class="feature-icon">📝</div>
+                        <h3>Text Analysis</h3>
+                        <p>Analyze mood from written text using advanced sentiment analysis</p>
+                    </div>
+                    <div class="feature-card" data-section="voice-analysis">
+                        <div class="feature-icon">🎤</div>
+                        <h3>Voice Analysis</h3>
+                        <p>Record voice messages and analyze emotional tone</p>
+                    </div>
+                    <div class="feature-card" data-section="video-analysis">
+                        <div class="feature-icon">📹</div>
+                        <h3>Video Analysis</h3>
+                        <p>Real-time emotion detection from facial expressions</p>
+                    </div>
+                    <div class="feature-card" data-section="wellness">
+                        <div class="feature-icon">🧘</div>
+                        <h3>Wellness Guide</h3>
+                        <p>Personalized recommendations based on your mood</p>
+                    </div>
+                    <div class="feature-card" data-section="travel">
+                        <div class="feature-icon">✈️</div>
+                        <h3>Travel Recommendations</h3>
+                        <p>Mood-based destination suggestions for your next trip</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Text Analysis Section -->
+    <section id="text-analysis" class="section">
+        <div class="container">
+            <h2 class="section-title">Text Mood Analysis</h2>
+            <div class="analysis-container">
+                <div class="input-panel">
+                    <textarea id="text-input" placeholder="Enter your text here to analyze your mood..." rows="8"></textarea>
+                    <div class="sample-texts">
+                        <p>Try these examples:</p>
+                        <button class="sample-btn" data-text="I'm having an amazing day! Everything is going perfectly.">😊 Happy Example</button>
+                        <button class="sample-btn" data-text="I'm feeling really down today. Nothing seems to be going right.">😢 Sad Example</button>
+                        <button class="sample-btn" data-text="This situation is really frustrating me!">😠 Angry Example</button>
+                    </div>
+                    <button id="analyze-text-btn" class="btn-primary">
+                        <span class="btn-text">Analyze Text</span>
+                        <div class="loading-spinner"></div>
+                    </button>
+                </div>
+                <div class="results-panel">
+                    <div id="text-results" class="results-container">
+                        <p class="placeholder-text">Results will appear here after analysis</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Analysis Section -->
+    <section id="voice-analysis" class="section">
+        <div class="container">
+            <h2 class="section-title">Voice Mood Analysis</h2>
+            <div class="analysis-container">
+                <div class="input-panel">
+                    <div class="voice-controls">
+                        <button id="record-btn" class="btn-record">
+                            <span class="record-icon">🎤</span>
+                            Start Recording
+                        </button>
+                        <button id="stop-record-btn" class="btn-stop" style="display: none;">
+                            <span class="stop-icon">⏹️</span>
+                            Stop Recording
+                        </button>
+                        <div id="recording-timer" class="recording-timer" style="display: none;">00:00</div>
+                    </div>
+                    <div class="audio-visualization">
+                        <canvas id="audio-canvas" width="400" height="100"></canvas>
+                    </div>
+                    <div class="voice-upload">
+                        <p>Or upload an audio file:</p>
+                        <input type="file" id="audio-upload" accept="audio/*" style="display: none;">
+                        <button onclick="document.getElementById('audio-upload').click()" class="btn-secondary">Choose Audio File</button>
+                    </div>
+                    <button id="analyze-voice-btn" class="btn-primary" disabled>
+                        <span class="btn-text">Analyze Voice</span>
+                        <div class="loading-spinner"></div>
+                    </button>
+                </div>
+                <div class="results-panel">
+                    <div id="voice-results" class="results-container">
+                        <p class="placeholder-text">Record or upload audio to analyze your mood</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Analysis Section -->
+    <section id="video-analysis" class="section">
+        <div class="container">
+            <h2 class="section-title">Video Mood Analysis</h2>
+            <div class="analysis-container">
+                <div class="input-panel">
+                    <div class="video-container">
+                        <video id="video-feed" autoplay muted playsinline></video>
+                        <canvas id="video-canvas" style="display: none;"></canvas>
+                    </div>
+                    <div class="video-controls">
+                        <button id="start-video-btn" class="btn-primary">Start Camera</button>
+                        <button id="stop-video-btn" class="btn-secondary" style="display: none;">Stop Camera</button>
+                        <button id="capture-btn" class="btn-capture" style="display: none;">📸 Capture & Analyze</button>
+                    </div>
+                </div>
+                <div class="results-panel">
+                    <div id="video-results" class="results-container">
+                        <p class="placeholder-text">Start camera and capture a moment to analyze your mood</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wellness Guide Section -->
+    <section id="wellness" class="section">
+        <div class="container">
+            <h2 class="section-title">Personalized Wellness Guide</h2>
+            <div id="wellness-content" class="wellness-container">
+                <div class="wellness-placeholder">
+                    <h3>🌟 Your Wellness Journey Starts Here</h3>
+                    <p>Complete a mood analysis to receive personalized wellness recommendations tailored to your current emotional state.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Recommendations Section -->
+    <section id="travel" class="section">
+        <div class="container">
+            <h2 class="section-title">Mood-Based Travel Recommendations</h2>
+            <div id="travel-content" class="travel-container">
+                <div class="travel-placeholder">
+                    <h3>🗺️ Discover Your Perfect Destination</h3>
+                    <p>Analyze your mood first to receive personalized travel recommendations that match your emotional state.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mood History Section -->
+    <section id="history" class="section">
+        <div class="container">
+            <h2 class="section-title">Your Mood Journey</h2>
+            <div id="mood-history" class="history-container">
+                <div class="history-placeholder">
+                    <p>Your mood analysis history will appear here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner-large"></div>
+            <p>Analyzing your mood...</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+</body>
+</html>
